@@ -19,5 +19,14 @@
         <script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.5.min.js"></script>
         {{ the_script|safe }}
       </body>
+      <h1>Recomender Systems</h1>
+      <div class="card-header">Predict future Inventory and most ordered menus with respect to your last quarter's analysis</div>
+        <div class="card-body">
+            <form action="/products/" method="POST" id="product_form">
+                <!-- <label for="product_name" class="col-form-label">Item Name</label> -->
+                <!-- <input type="text" name="menu_name" id="product_name"> -->
+                <input id="submitProduct" value="Make Predictions" class="btn btn-primary">
+            </form>
+        </div> 
 </main>
 {% endblock %}
