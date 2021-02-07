@@ -1,0 +1,3348 @@
+{
+	"info": {
+		"_postman_id": "d1a86ef3-4163-44cd-ad2d-5b6951b01425",
+		"name": "BSP Sandbox",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "Create Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2add5120-07cd-4516-8c41-df59cab89257",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"postman.setEnvironmentVariable(\"order-id\", jsonData.id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "nep-enterprise-unit",
+								"value": "{{bsp-site-id}}"
+							},
+							{
+								"key": "Date",
+								"value": "{{date}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"expireAt\" : \"2020-05-08T14:26:48Z\",\n\t\"comments\" : \"Good-Morning\"\n}"
+						},
+						"url": {
+							"raw": "{{order-service}}",
+							"host": [
+								"{{order-service}}"
+							]
+						},
+						"description": "Creates an order under the provided enterprise unit and organization"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "39998cd4-3396-4598-ba03-20c1c1c8c26e",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "nep-organization",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "nep-enterprise-unit",
+								"value": "{{bsp-site-id}}"
+							},
+							{
+								"key": "Date",
+								"value": "{{date}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{order-service}}/{{order-id}}",
+							"host": [
+								"{{order-service}}"
+							],
+							"path": [
+								"{{order-id}}"
+							]
+						},
+						"description": "Gets an Order. The order ID is automatically saved when calling Create. The '{{order-id}}' in the request URL can be replaced by a different order id."
+					},
+					"response": []
+				},
+				{
+					"name": "Find Orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2fa058db-90eb-4f12-a236-de9b2360e1d6",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "nep-enterprise-unit",
+								"value": "{{bsp-site-id}}"
+							},
+							{
+								"key": "Date",
+								"value": "{{date}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{order-service}}/find",
+							"host": [
+								"{{order-service}}"
+							],
+							"path": [
+								"find"
+							]
+						},
+						"description": "Creates an order under the provided enterprise unit and organization"
+					},
+					"response": []
+				},
+				{
+					"name": "Replace Order",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "nep-organization",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "nep-enterprise-unit",
+								"value": "{{bsp-site-id}}"
+							},
+							{
+								"key": "Date",
+								"value": "{{date}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fulfillment\": {\n    \"address\": {\n      \"type\": \"Other\",\n      \"typeLabel\": \"string\",\n      \"line1\": \"New Address Line 1\",\n      \"line2\": \"Address Line 2\",\n      \"city\": \"New York\",\n      \"state\": \"NY\",\n      \"country\": \"USA\",\n      \"postalCode\": \"10001\",\n      \"notes\": \"New Location\",\n      \"businessInfo\": {\n        \"name\": \"New Business\",\n        \"department\": \"Software\"\n      }\n    },\n    \"leadTimes\": [\n      {\n        \"type\": \"Setup\",\n        \"typeLabel\": \"string\",\n        \"interval\": 10,\n        \"intervalUnits\": \"Minutes\",\n        \"lineId\": \"leadTime1\"\n      }\n    ],\n    \"notes\": \"Deliver to Times Square\",\n    \"pickupDate\": \"2018-12-31T23:59:00.000Z\",\n    \"pickupLocation\": \"New York City\",\n    \"fulfillmentTime\": \"2018-12-31T23:59:59.000Z\",\n    \"type\": \"Pickup\",\n    \"typeLabel\": \"string\",\n    \"autoRelease\": true\n  },\n  \"fees\": [\n    {\n      \"type\": \"Web\",\n      \"typeLabel\": \"string\",\n      \"provider\": \"NY\",\n      \"amount\": 0,\n      \"override\": true,\n      \"lineId\": \"fee1\",\n      \"groupMemberId\": \"groupMember1\"\n\n    }\n  ],\n  \"orderLines\": [\n    {\n      \"comments\": \"New Order Line\",\n      \"description\": \"This is a new order line\",\n      \"extendedAmount\": 0,\n      \"itemType\": \"string\",\n      \"notes\": [\n        {\n          \"type\": \"Substitutions\",\n          \"typeLabel\": \"string\",\n          \"value\": \"string\",\n          \"lineId\": \"string\"\n        }\n      ],\n      \"parentLineId\": \"string\",\n      \"priceModifiers\": [\n        {\n          \"amount\": 0,\n          \"description\": \"string\",\n          \"referenceId\": \"string\",\n          \"lineId\": \"string\"\n        }\n      ],\n      \"productId\": {\n        \"type\": \"string\",\n        \"value\": \"string\"\n      },\n      \"quantity\": {\n        \"unitOfMeasure\": \"EA\",\n        \"unitOfMeasureLabel\": \"string\",\n        \"value\": 0\n      },\n      \"substitutionAllowed\": true,\n      \"taxes\": [\n        {\n          \"amount\": 0,\n          \"code\": \"string\",\n          \"isIncluded\": true,\n          \"percentage\": 0,\n          \"lineId\": \"string\"\n        }\n      ],\n      \"unitPrice\": 0,\n      \"scanData\": \"string\",\n      \"supplementalData\": \"string\",\n      \"modifierCode\": \"string\",\n      \"linkGroupCode\": \"string\",\n      \"lineReplaced\": \"replacedLineId\",\n      \"fulfillmentResult\": \"Fulfilled\",\n      \"groupMemberId\": \"groupMember1\",\n      \"overridePrice\": true,\n      \"lineId\": \"orderLine1\"\n    },\n    {\n    \t\"description\": \"Replaced Line Item\",\n    \t\"fulfillmentStatus\": \"Replaced\",\n    \t\"lineId\": \"replacedLineId\"\n    }\n  ],\n  \"payments\": [\n    {\n      \"amount\": 12,\n      \"description\": \"string\",\n      \"gratuity\": 2,\n      \"referenceId\": \"string\",\n      \"status\": \"Paid\",\n      \"type\": \"CreditDebit\",\n      \"subType\": \"string\",\n      \"maskedPAN\": \"************1234\",\n      \"token\": \"string\",\n      \"payBalance\": true,\n      \"accountNumber\": \"string\",\n      \"expiration\": {\n        \"month\": 12,\n        \"year\": 2022\n      },\n      \"lineId\": \"payment1\",\n      \"groupMemberId\": \"groupMember1\"\n    }\n  ],\n  \"taxes\": [\n    {\n      \"amount\": 0,\n      \"code\": \"string\",\n      \"description\": \"string\",\n      \"isIncluded\": true,\n      \"percentage\": 0,\n      \"source\": \"string\",\n      \"active\": true,\n      \"lineId\": \"tax1\",\n      \"groupMemberId\": \"groupMember1\"\n    }\n  ],\n  \"additionalReferenceIds\": {\n    \"someRefID\": \"myCustomReferenceID\"\n  },\n  \"taxExempt\": false,\n  \"taxExemptId\": \"string\",\n  \"totalModifiers\": [\n    {\n      \"amount\": 0,\n      \"description\": \"string\",\n      \"referenceId\": \"string\",\n      \"lineId\": \"totalModifier1\",\n      \"groupMemberId\": \"groupMember1\"\n    }\n  ],\n  \"partySize\": 1,\n  \"comments\": \"PUT Replaces The Entire Order\",\n  \"channel\": \"Web\",\n  \"currency\": \"string\",\n  \"customer\": {\n    \"id\": \"CustomerID\",\n    \"externalIds\": [\n      {\n        \"type\": \"Other\",\n        \"typeLabel\": \"string\",\n        \"value\": \"string\",\n        \"lineId\": \"externalID1\"\n      }\n    ],\n    \"name\": \"New Customer\",\n    \"firstName\": \"New\",\n    \"lastName\": \"Customer\",\n    \"phone\": \"555-555-5556\",\n    \"phoneExtension\": \"string\",\n    \"email\": \"new.customer@email.com\"\n  },\n  \"groupMembers\": [\n    {\n      \"name\": \"New Customer\",\n      \"firstName\": \"New\",\n      \"lastName\": \"Customer\",\n      \"externalIds\": {\n        \"anotherMemberID\": \"Some Custom Identifier\",\n        \"newlyAddedID\": \"Another Custom Identifier\"\n      },\n      \"lineId\": \"groupMember1\"\n    }\n  ],\n  \"errorDescription\": \"string\",\n  \"owner\": \"New Owner\",\n  \"referenceId\": \"someCustomIdentifier\",\n  \"source\": \"Phone Order\",\n  \"status\": \"OrderPlaced\",\n  \"totals\": [\n    {\n      \"type\": \"Net\",\n      \"value\": 0,\n      \"lineId\": \"total1\"\n    }\n  ],\n  \"checkInDetails\": {\n  \t\"location\": \"customer service\",\n  \t\"application\": \"app2\",\n  \t\"origin\": {\n  \t\t\"id\": 1234,\n  \t\t\"type\": \"iphone\"\n  \t},\n  \t\"vector\": {\n  \t\t\"id\": 3210,\n  \t\t\"type\": \"terminal\"\n  \t}\n  }\n}"
+						},
+						"url": {
+							"raw": "{{order-service}}/{{order-id}}",
+							"host": [
+								"{{order-service}}"
+							],
+							"path": [
+								"{{order-id}}"
+							]
+						},
+						"description": "This call replaces the entire Order, referenced by the order id, with the provided order data."
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Order",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "nep-organization",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "nep-enterprise-unit",
+								"value": "{{bsp-site-id}}"
+							},
+							{
+								"key": "Date",
+								"value": "{{date}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"orderLines\": [\n    {\n      \"comments\": \"Existing Order Lines can be Updated\",\n      \"description\": \"This is a single order line that has been patched\",\n      \"lineId\": \"orderLine1\"\n    },\n    {\n    \t\"description\": \"A New Order Line Can be Added\",\n    \t\"fulfillmentStatus\": \"Fulfilled\",\n    \t\"lineId\": \"newOrderLine\"\n    }\n  ],\n  \"partySize\": 2,\n  \"pickupContact\": {\n  \t\"name\": \"John\",\n    \"vehicle\": {\n    \t\"model\": \"Leaf\",\n    \t\"year\": \"2017\",\n    \t\"color\": \"blue\"\n    \t\n    }\n  },\n  \"comments\": \"PATCH Only Replaces The Provided Fields\",\n  \"channel\": \"Web\",\n  \"groupMembers\": [\n    {\n      \"name\": \"Jane Doe\",\n      \"firstName\": \"Jane\",\n      \"lineId\": \"groupMember1\"\n    }\n  ],\n  \"errorDescription\": \"string\",\n  \"owner\": \"string\",\n  \"referenceId\": \"someCustomIdentifier\",\n  \"source\": \"Online Order\",\n  \"status\": \"InFulfillment\",\n  \"promotions\": [\n        {\n            \"lineId\": \"b7008bf5aae846599a18182f0ee8b00b\",\n            \"referenceId\": \"9887665443221\",\n            \"supportingData\": \"ABC4567890\",\n            \"amount\": 5.99,\n            \"numGuests\": 5,\n            \"orderLineGroups\": [\n                {\n                    \"lineId\": \"c9593dadbf1748df829de5ba7372cec2\",\n                    \"name\": \"Value Combo #5\",\n                    \"orderLineIds\": [\n                        \"b0394f38690e4ad4aa5732c654e99f7a\",\n                        \"9fe7880229bc4a56bb1634cf63c75b44\",\n                        \"fd5e63eb38bf4aa8b0f4b85f57a3d601\",\n                        \"ad6f13666a644da88eb0cd9e777c54bb\"\n                    ]\n                }\n            ],\n            \"adjustment\": {\n                \"level\": \"ORDER\",\n                \"type\": \"PROMO\",\n                \"applied\": false\n            }\n        }\n    ], \n  \"checkInDetails\": {\n  \t\"application\": \"app3\",\n  \t\"origin\": {\n  \t\t\"type\": \"Aloha\"\n  \t},\n  \t\"vector\": {\n  \t\t\"type\": \"printer\"\n    }\n  }\n}"
+						},
+						"url": {
+							"raw": "{{order-service}}/{{order-id}}",
+							"host": [
+								"{{order-service}}"
+							],
+							"path": [
+								"{{order-id}}"
+							]
+						},
+						"description": "Patches an Order. Only the fields that are specified in the body of the request will be updated, while the rest will remain unchanged on the order. Specified line items can be updated if the lineId is provided, while new line IDs or line items without an ID will be created and added to that collection."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "TDM",
+			"item": [
+				{
+					"name": "Create Tlog",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f8ed8dd9-2b17-466d-b40c-3ad7beb70c8d",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "38f6e0de-1f26-4b07-863c-af82f86ffc3b",
+								"exec": [
+									"var uuid = require('uuid'); ",
+									"var tlogId = uuid.v4(); ",
+									"postman.setEnvironmentVariable(\"tlog-id\", tlogId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "Date",
+								"value": "{{date}}"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"tlogData\": [{\n\t    \"id\": \"{{tlog-id}}\",\n\t    \"modelVersion\": 1,\n\t    \"siteInfo\": {\n\t        \"name\": \"My Store Name\",\n\t        \"id\": \"5\",\n\t        \"siteTimeZone\": {\n\t            \"timeZone\": \"America/New_York\"\n\t        }\n\t    },\n\t    \"transactionNumber\": \"12345\",\n\t    \"openDateTimeUtc\": {\n\t        \"dateTime\": \"2020-01-30T12:46:47Z\",\n\t        \"originalOffset\": \"-04:00\"\n\t    },\n\t    \"documentExpirationDate\": null,\n\t    \"closeDateTimeUtc\": {\n\t        \"dateTime\": \"2020-01-30T13:06:39Z\",\n\t        \"originalOffset\": \"-04:00\"\n\t    },\n\t    \"touchPointId\": \"3\",\n\t    \"configurationDateTimeUtc\": null,\n\t    \"touchPointType\": \"POS\",\n\t    \"touchPointGroup\": \"Terminal\",\n\t    \"dataProviderName\": \"MyPOS\",\n\t    \"dataProviderVersion\": \"2.0\",\n\t    \"businessDay\": {\n\t        \"dateTime\": \"2020-01-30T00:00:00Z\",\n\t        \"originalOffset\": \"-04:00\"\n\t    },\n\t    \"isTrainingMode\": false,\n\t    \"linkedTransactions\": [],\n\t    \"transactionReason\": null,\n\t    \"tlog\": {\n\t        \"receiptId\": \"32111\",\n\t        \"receiptInfo\": null,\n\t        \"location\": {\n\t            \"locationId\": \"5\",\n\t            \"location\": \"Table 5\"\n\t        },\n\t        \"revenueCenter\": {\n\t            \"id\": \"1\",\n\t            \"name\": \"Restaurant\"\n\t        },\n\t        \"isVoided\": false,\n\t        \"voidInfo\": null,\n\t        \"isSuspended\": false,\n\t        \"isResumed\": false,\n\t        \"isRecalled\": false,\n\t        \"isDeleted\": false,\n\t        \"transactionType\": \"SALES\",\n\t        \"localCurrency\": {\n\t            \"code\": \"USD\"\n\t        },\n\t        \"employees\": [\n\t            {\n\t                \"id\": \"1234\",\n\t                \"name\": \"John Snow\",\n\t                \"shiftId\": \"0\",\n\t                \"isTippableEmployee\": true,\n\t                \"roleId\": \"1\",\n\t                \"roleName\": \"Server\",\n\t                \"action\": null,\n\t                \"actionLabel\": null\n\t            }\n\t        ],\n\t        \"totals\": {\n\t            \"taxInclusive\": {\n\t                \"amount\": 0.0000000000\n\t            },\n\t            \"taxExclusive\": {\n\t                \"amount\": 1.1600000000\n\t            },\n\t            \"returnItemsTaxInclusive\": {\n\t                \"amount\": 0.0000000000\n\t            },\n\t            \"returnItemsTaxExclusive\": {\n\t                \"amount\": 0.0000000000\n\t            },\n\t            \"taxExemptAmount\": {\n\t                \"amount\": 0.0000000000\n\t            },\n\t            \"discountAmount\": {\n\t                \"amount\": 0.0000000000\n\t            },\n\t            \"grossAmount\": {\n\t                \"amount\": 13.0000000000\n\t            },\n\t            \"grandAmount\": {\n\t                \"amount\": 14.1600000000\n\t            },\n\t            \"voidsAmount\": {\n\t                \"amount\": 0.0000000000\n\t            },\n\t            \"grossReturnsAmount\": {\n\t                \"amount\": 0.0000000000\n\t            },\n\t            \"netAmount\": {\n\t                \"amount\": 13.0000000000\n\t            }\n\t        },\n\t        \"customer\": null,\n\t        \"loyaltyAccount\": [],\n\t        \"totalTaxes\": [\n\t            {\n\t                \"id\": \"tax_12345_1\",\n\t                \"name\": \"Sales Tax\",\n\t                \"taxExempt\": null,\n\t                \"taxType\": \"TAX_EXCLUSIVE\",\n\t                \"taxTypeLabel\": null,\n\t                \"taxableAmount\": {\n\t                    \"amount\": 13.0000000000\n\t                },\n\t                \"amount\": {\n\t                    \"amount\": 1.1600000000\n\t                },\n\t                \"isRefund\": false,\n\t                \"isVoided\": false,\n\t                \"taxPercent\": 0.09,\n\t                \"taxTypeCode\": null,\n\t                \"taxTypeCodeLabel\": null,\n\t                \"taxSaleTypeCode\": null,\n\t                \"taxSaleTypeCodeLabel\": null\n\t            }\n\t        ],\n\t        \"items\": [\n\t            {\n\t                \"id\": \"123456\",\n\t                \"parentItemId\": null,\n\t                \"productId\": \"1234\",\n\t                \"productName\": \"Pizza\",\n\t                \"variations\": [],\n\t                \"departmentId\": null,\n\t                \"revenueCenter\": {\n\t                    \"id\": \"1\",\n\t                    \"name\": \"Restaurant\"\n\t                },\n\t                \"isReturn\": false,\n\t                \"isInventoryAffectedByReturn\": false,\n\t                \"isVoided\": false,\n\t                \"isItemNotOnFile\": false,\n\t                \"voidInfo\": null,\n\t                \"regularUnitPrice\": {\n\t                    \"amount\": 13.0000000000\n\t                },\n\t                \"extendedUnitPrice\": {\n\t                    \"amount\": 13.0000000000\n\t                },\n\t                \"actualUnitPrice\": {\n\t                    \"amount\": 13.0000000000\n\t                },\n\t                \"extendedAmount\": {\n\t                    \"amount\": 13.0000000000\n\t                },\n\t                \"actualAmount\": {\n\t                    \"amount\": 13.0000000000\n\t                },\n\t                \"quantity\": {\n\t                    \"quantity\": 1.0000000000,\n\t                    \"unitOfMeasurement\": \"PIECE\",\n\t                    \"unitOfMeasurementLabel\": null\n\t                },\n\t                \"inventoryQuantity\": null,\n\t                \"isWeighted\": false,\n\t                \"isOverridden\": false,\n\t                \"overrideInfo\": null,\n\t                \"orderNumber\": \"1\",\n\t                \"employee\": {\n\t                    \"id\": \"1234\",\n\t                    \"name\": \"John Snow\",\n\t                    \"shiftId\": \"0\",\n\t                    \"isTippableEmployee\": true,\n\t                    \"roleId\": \"1\",\n\t                    \"roleName\": \"Server\",\n\t                    \"action\": null,\n\t                    \"actionLabel\": null\n\t                },\n\t                \"itemPromotions\": [],\n\t                \"itemDiscounts\": [],\n\t                \"itemTaxes\": [\n\t                    {\n\t                        \"id\": \"tax_12345_1\",\n\t                        \"name\": \"Sales Tax\",\n\t                        \"taxExempt\": null,\n\t                        \"taxType\": \"TAX_EXCLUSIVE\",\n\t                        \"taxTypeLabel\": null,\n\t                        \"taxableAmount\": {\n\t                            \"amount\": 13.0000000000\n\t                        },\n\t                        \"amount\": {\n\t                            \"amount\": 1.1600000000\n\t                        },\n\t                        \"isRefund\": false,\n\t                        \"isVoided\": false,\n\t                        \"taxPercent\": 0.09,\n\t                        \"taxTypeCode\": null,\n\t                        \"taxTypeCodeLabel\": null,\n\t                        \"taxSaleTypeCode\": null,\n\t                        \"taxSaleTypeCodeLabel\": null\n\t                    }\n\t                ],\n\t                \"category\": {\n\t                    \"id\": \"7\",\n\t                    \"name\": \"Food\"\n\t                },\n\t                \"surcharges\": [],\n\t                \"isNonSaleItem\": false,\n\t                \"itemSellType\": \"SALES\",\n\t                \"itemSellTypeLabel\": null,\n\t                \"conceptId\": null,\n\t                \"beginDateTimeUtc\": {\n\t                    \"dateTime\": \"2020-01-30T12:46:39Z\",\n\t                    \"originalOffset\": \"-04:00\"\n\t                },\n\t                \"endDateTimeUtc\": {\n\t                    \"dateTime\": \"2020-01-30T13:06:39Z\",\n\t                    \"originalOffset\": \"-04:00\"\n\t                },\n\t                \"entryMethod\": \"KEYED\",\n\t                \"entryMethodLabel\": null,\n\t                \"catalogItemCode\": null,\n\t                \"isRefused\": false,\n\t                \"refusalInfo\": null,\n\t                \"operatorBypassApprovalInfo\": null,\n\t                \"operatorBypassApprovals\": [],\n\t                \"itemLinkType\": null,\n\t                \"itemLinkTypeLabel\": null,\n\t                \"itemPharmacyInfo\": null,\n\t                \"returnInfo\": null,\n\t                \"inputIdentifierData\": null,\n\t                \"fuelSaleInfo\": null\n\t            }\n\t        ],\n\t        \"orders\": [\n\t            {\n\t                \"orderNumber\": \"1\",\n\t                \"orderMode\": {\n\t                    \"id\": \"1\",\n\t                    \"name\": \"ORDER\"\n\t                },\n\t                \"orderChannel\": \"WALK_IN\",\n\t                \"orderChannelLabel\": null,\n\t                \"orderSource\": \"POS\"\n\t            }\n\t        ],\n\t        \"tenders\": [\n\t            {\n\t                \"id\": \"12345\",\n\t                \"name\": \"Am Ex\",\n\t                \"type\": \"CREDIT_CARD\",\n\t                \"typeLabel\": null,\n\t                \"tenderAmount\": {\n\t                    \"amount\": 14.1600000000\n\t                },\n\t                \"currency\": null,\n\t                \"originalAmount\": null,\n\t                \"exchangeRate\": null,\n\t                \"tipAmount\": {\n\t                    \"amount\": 0.0000000000\n\t                },\n\t                \"tipReductionAmount\": null,\n\t                \"overpaymentAmount\": null,\n\t                \"usage\": \"PAYMENT\",\n\t                \"isVoided\": false,\n\t                \"voidInfo\": null,\n\t                \"cashDrawerId\": \"0\",\n\t                \"surcharges\": [],\n\t                \"cardLastFourDigits\": \"1234\",\n\t                \"employee\": {\n\t                    \"id\": \"1234\",\n\t                    \"name\": \"John Snow\",\n\t                    \"shiftId\": \"0\",\n\t                    \"isTippableEmployee\": true,\n\t                    \"roleId\": \"1\",\n\t                    \"roleName\": \"Server\",\n\t                    \"action\": null,\n\t                    \"actionLabel\": null\n\t                },\n\t                \"authorizationCode\": \"APPROVE\",\n\t                \"authorizationCodeLabel\": null,\n\t                \"lineNumber\": 0,\n\t                \"tenderLink\": null,\n\t                \"smartWIC\": null,\n\t                \"authorizationResponseTime\": {\n\t                    \"dateTime\": \"2020-01-30T13:06:39Z\",\n\t                    \"originalOffset\": \"-04:00\"\n\t                },\n\t                \"promotionId\": null,\n\t                \"maskedCardNumber\": null,\n\t                \"tenderAuthorization\": {\n\t                    \"authorizationCodeNumber\" : \"12345\",\n\t                    \"referenceNumber\" : \"1\",\n\t                    \"requestedAmount\" : {\n\t                        \"amount\": 14.1600000000\n\t                    },\n\t                    \"authorizationDateTime\" : {\n\t                        \"dateTime\": \"2020-01-30T13:06:39Z\",\n\t                        \"originalOffset\": \"-04:00\"\n\t                    },\n\t                    \"authorizationType\" : \"Online\",\n\t                    \"cardTypeId\" : \"6\",\n\t                    \"paymentProvider\" : {\n\t                        \"epsTerminalId\" : \"123\",\n\t                        \"epsName\" : \"Connected Payment\",\n\t                        \"responseCode\" : \"123\"\n\t                    },\n\t                    \"isSignatureRequired\" : false,\n\t                    \"isVerifiedByPIN\" : true,\n\t                    \"isElectronicSignature\" : true\n\t                },\n\t                \"tenderEndDateTime\": {\n\t                    \"dateTime\": \"2020-01-30T13:06:39Z\",\n\t                    \"originalOffset\": \"-04:00\"\n\t                },\n\t                \"checkInfo\": null,\n\t                \"nameOnCard\": \"Ellaria Sand\",\n\t                \"couponId\": null\n\t            }\n\t        ],\n\t        \"transactionPromotions\": [],\n\t        \"transactionDiscounts\": [],\n\t        \"coupons\": [],\n\t        \"surcharges\": [],\n\t        \"customerCount\": 2,\n\t        \"receiptDeliveryInfo\": null,\n\t        \"checkOutType\": \"UNKNOWN\",\n\t        \"checkOutTypeLabel\": null,\n\t        \"operatorBypassApprovals\": [],\n\t        \"pharmacyDetails\": null\n\t    },\n\t    \"transactionCategory\": \"SALE_OR_RETURN\"\n\t}]\n}\t"
+						},
+						"url": {
+							"raw": "{{tdm-service}}",
+							"host": [
+								"{{tdm-service}}"
+							]
+						},
+						"description": "Creates a Transaction in the organization."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Tlog by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "83fc5679-ef81-4419-bdd1-ebd009523d89",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "nep-organization",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "Date",
+								"value": "{{date}}"
+							}
+						],
+						"url": {
+							"raw": "{{tdm-service}}/{{tlog-id}}",
+							"host": [
+								"{{tdm-service}}"
+							],
+							"path": [
+								"{{tlog-id}}"
+							]
+						},
+						"description": "Retrieves a transaction in an organization. The tlog ID is automatically saved when calling Create. The '{{tlog-id}}' in the request URL can be replaced by a different transactoin id."
+					},
+					"response": []
+				},
+				{
+					"name": "Find Tlogs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4b9a3327-5626-47d9-9e6f-862cca1157ec",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "Date",
+								"value": "{{date}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"fromTransactionDateTimeUtc\": {\n        \"dateTime\": \"2020-01-01T00:00:00.000Z\"\n    },\n    \"toTransactionDateTimeUtc\": {\n        \"dateTime\": \"2021-01-01T00:00:00.000Z\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{tdm-service}}/find",
+							"host": [
+								"{{tdm-service}}"
+							],
+							"path": [
+								"find"
+							]
+						},
+						"description": "Searches for transactions matching provided criteria in an organization"
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "49463c7a-3b9d-4734-ad9b-bddb5bb50d4f",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "deaf7175-c217-4bbf-affa-ced91d9b3cbf",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Catalog",
+			"item": [
+				{
+					"name": "Create catalog item",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c6ff7d31-7b55-48aa-9332-222c4da08290",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f9f4a480-5704-4979-9148-a3d58157bed8",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{bsp-access-key}}",
+								"type": "text"
+							},
+							{
+								"key": "nep-organization",
+								"value": "{{bsp-organization}}",
+								"type": "text"
+							},
+							{
+								"key": "Date",
+								"value": "{{date}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-us",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"version\": 111,\n  \"packageIdentifiers\": [\n    {\n      \"type\": \"sampleaaaaaaaaaaaaaa\",\n      \"value\": \"5043\"\n    }\n  ],\n  \"longDescription\": {\n    \"values\": [\n      {\n        \"locale\": \"en-us\",\n        \"value\": \"String long description in American English\"\n      },\n      {\n        \"locale\": \"fr-ca\",\n        \"value\": \"String long description in American English\"\n      },\n      {\n        \"locale\": \"en-br\",\n        \"value\": \"String long description in American English\"\n      }\n    ]\n  },\n  \"shortDescription\": {\n    \"values\": [\n      {\n        \"locale\": \"fr-ca\",\n        \"value\": \"Short descritpion of type string in Canadian FrenchsShort desSho\"\n      },\n      {\n        \"locale\": \"en-us\",\n        \"value\": \"Short descritpion of type string in Canadian FrenchsShort desSho\"\n      }\n    ]\n  },\n  \"departmentId\":\"Short descritpion of type string in Canadian FrenchsShort desShoShortShort descritpiondescritpiondes\",\n  \"merchandiseCategory\": {\n    \"nodeId\":\"ShortStringStringStringStringStringStringStringStringStringStringStringStringStringStringStringStringStringStringStringS\"\n  },\n  \"status\": \"INACTIVE\",\n  \"familyCode\": \" String\",\n  \"manufacturerCode\": \"manufacturer T\",\n  \"nonMerchandise\": \"false\",\n  \"dynamicAttributes\": [\n    {\n     \n        \"type\": \"ab1\",\n      \"attributes\": [\n        {\n          \"localizedValue\": {\n            \"values\": [\n              {\n                \"locale\": \"en-US\",\n                \"value\": \"Attribute Value\"\n              }\n            ]\n          },\n          \"key\": \"Dynamic1\",\n          \"value\": \" Dynamic Attribute value\"\n        }\n      ]\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{catalog-items-service}}/itemCodeTest",
+							"host": [
+								"{{catalog-items-service}}"
+							],
+							"path": [
+								"itemCodeTest"
+							]
+						},
+						"description": "Updates/creates an item's fields for the input item."
+					},
+					"response": []
+				},
+				{
+					"name": "Get catalog item",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dce661b9-e4f7-4322-8e37-971d9fd7f9b5",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"type": "text",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "Date",
+								"type": "text",
+								"value": "{{date}}"
+							},
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept-Language",
+								"type": "text",
+								"value": "en-us"
+							}
+						],
+						"url": {
+							"raw": "{{catalog-items-service}}/itemCodeTest",
+							"host": [
+								"{{catalog-items-service}}"
+							],
+							"path": [
+								"itemCodeTest"
+							]
+						},
+						"description": "Retrieves full item document by item identifier (code)."
+					},
+					"response": []
+				},
+				{
+					"name": "Find catalog items",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1beb63d2-4800-45f8-b73b-39bec994f39b",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{bsp-access-key}}",
+								"type": "text"
+							},
+							{
+								"key": "nep-organization",
+								"value": "{{bsp-organization}}",
+								"type": "text"
+							},
+							{
+								"key": "Date",
+								"value": "{{date}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-us",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{catalog-items-service}}/?codePattern=*&longDescriptionPattern=*",
+							"host": [
+								"{{catalog-items-service}}"
+							],
+							"path": [
+								""
+							],
+							"query": [
+								{
+									"key": "codePattern",
+									"value": "*"
+								},
+								{
+									"key": "longDescriptionPattern",
+									"value": "*"
+								}
+							]
+						},
+						"description": "Catalog Finder Api: \n   \n   Accept query params to search upon:\n      You can search upon:\n      \n         1. itemCodePattern\n         2. packageIdentifierPattern\n         3. longDescriptionPattern\n         4. shortDescriptionPattern\n         5. itemStatus (Enum accepts ACTIVE OR INACTIVE)\n         6. categoryCode\n         7. sortField (Can be short or long description,Item code\n         8. sortDirection (ASC OR DESC)\n         \n     Above searchable fields can have values in the form of pattern using solr wild card search.\n     \nNote : Look if you are searchiing for the same organization or not. If user is in different org you get the results only for the respective org.\n       \n       For simple testing use the root(/)  org and catalog_user as credentials.\n       For testing with different orgs you need to create user who has catlog roles,  and assign an organization with catalog roles to that user.\n       \nNOTE :Query is an AND operation"
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "3aa0f015-74f4-469e-8e3e-cde6c55f08bc",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "0f1b0063-0117-4d6b-bdd5-cdb7abff24a9",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Sites",
+			"item": [
+				{
+					"name": "Create Site",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6e12ccea-da48-41c8-8f9d-889ce6c5d3c4",
+								"exec": [
+									"var siteNum = pm.environment.get(\"site-num\");",
+									"siteNum = siteNum ? siteNum+1 : 1;",
+									"pm.environment.set(\"site-num\", siteNum);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "000166c2-b5b9-4bd6-81ab-20252686f1e9",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"site-id\", jsonData.id);",
+									"postman.setEnvironmentVariable(\"site-ref-id\", jsonData.referenceId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{bsp-access-key}}",
+								"type": "text"
+							},
+							{
+								"key": "nep-organization",
+								"value": "{{bsp-organization}}",
+								"type": "text"
+							},
+							{
+								"key": "Date",
+								"value": "{{date}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"siteName\": \"POSTMAN-TEST-SITE-{{site-num}}\",\n  \"enterpriseUnitName\": \"POSTMAN-TEST-SITE-{{site-num}}\",\n  \"hours\": [\n    {\n      \"open\": {\n        \"day\": \"MONDAY\",\n        \"time\": \"0800\"\n      },\n      \"close\": {\n        \"day\": \"MONDAY\",\n        \"time\": \"2000\"\n      }\n    }\n  ],\n  \"contact\": {\n      \"contactPerson\": \"George P. Burdell\",\n      \"phoneNumber\": \"4048942000\",\n      \"phoneNumberCountryCode\": \"1\"\n  },\n  \"timeZone\": \"US/Eastern\",\n  \"locked\": false,\n  \"description\": \"Test Site for Postman Collection\",\n  \"currency\": \"USD\",\n  \"address\": {\n      \"street\": \"North Ave NW\",\n      \"city\": \"Atlanta\",\n      \"state\": \"GA\",\n      \"country\": \"USA\",\n      \"postalCode\": \"30332\"\n  },\n  \"coordinates\": {\n      \"latitude\": 33.7767488,\n      \"longitude\": -84.3984255\n  },\n  \"status\": \"ACTIVE\",\n  \"customAttributeSets\": [],\n  \"referenceId\": \"SITE-REF-{{site-num}}\"\n}"
+						},
+						"url": {
+							"raw": "{{site-service}}/sites",
+							"host": [
+								"{{site-service}}"
+							],
+							"path": [
+								"sites"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Site",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d25c30f6-f423-4b85-bad8-a8bce783d755",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "86b814ba-e298-425c-b7f6-4619c8086e0b",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"site-id\", jsonData.id);",
+									"postman.setEnvironmentVariable(\"site-ref-id\", jsonData.referenceId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"type": "text",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "Date",
+								"value": "{{date}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"siteName\": \"POSTMAN-TEST-SITE-{{site-num}}\",\n  \"enterpriseUnitName\": \"POSTMAN-TEST-SITE-{{site-num}}\",\n  \"hours\": [\n    {\n      \"open\": {\n        \"day\": \"MONDAY\",\n        \"time\": \"0800\"\n      },\n      \"close\": {\n        \"day\": \"MONDAY\",\n        \"time\": \"2000\"\n      }\n    }\n  ],\n  \"contact\": {\n      \"contactPerson\": \"George P. Burdell\",\n      \"phoneNumber\": \"4048942000\",\n      \"phoneNumberCountryCode\": \"1\"\n  },\n  \"timeZone\": \"US/Eastern\",\n  \"locked\": false,\n  \"description\": \"Test Site for Postman Collection\",\n  \"currency\": \"USD\",\n  \"address\": {\n      \"street\": \"North Ave NW\",\n      \"city\": \"Atlanta\",\n      \"state\": \"GA\",\n      \"country\": \"USA\",\n      \"postalCode\": \"30332\"\n  },\n  \"coordinates\": {\n      \"latitude\": 33.7767488,\n      \"longitude\": -84.3984255\n  },\n  \"status\": \"ACTIVE\",\n  \"customAttributeSets\": [],\n  \"referenceId\": \"SITE-REF-{{site-num}}\"\n}"
+						},
+						"url": {
+							"raw": "{{site-service}}/sites/{{site-id}}",
+							"host": [
+								"{{site-service}}"
+							],
+							"path": [
+								"sites",
+								"{{site-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put Site",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "fec277dd-f494-4a07-99c8-02085b2ba81b",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "a39cf674-aa38-4ead-a894-40bf4999c451",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"site-id\", jsonData.id);",
+									"postman.setEnvironmentVariable(\"site-ref-id\", jsonData.referenceId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"type": "text",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "Date",
+								"value": "{{date}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"siteName\": \"POSTMAN-TEST-SITE-{{site-num}}\",\n  \"enterpriseUnitName\": \"POSTMAN-TEST-SITE-{{site-num}}\",\n  \"hours\": [\n    {\n      \"open\": {\n        \"day\": \"MONDAY\",\n        \"time\": \"0800\"\n      },\n      \"close\": {\n        \"day\": \"MONDAY\",\n        \"time\": \"2000\"\n      }\n    }\n  ],\n  \"contact\": {\n      \"contactPerson\": \"George P. Burdell\",\n      \"phoneNumber\": \"4048942000\",\n      \"phoneNumberCountryCode\": \"1\"\n  },\n  \"timeZone\": \"US/Eastern\",\n  \"locked\": false,\n  \"description\": \"Test Site for Postman Collection\",\n  \"currency\": \"USD\",\n  \"address\": {\n      \"street\": \"North Ave NW\",\n      \"city\": \"Atlanta\",\n      \"state\": \"GA\",\n      \"country\": \"USA\",\n      \"postalCode\": \"30332\"\n  },\n  \"coordinates\": {\n      \"latitude\": 33.7767488,\n      \"longitude\": -84.3984255\n  },\n  \"status\": \"ACTIVE\",\n  \"customAttributeSets\": [],\n  \"referenceId\": \"SITE-REF-{{site-num}}\"\n}"
+						},
+						"url": {
+							"raw": "{{site-service}}/sites/{{site-id}}",
+							"host": [
+								"{{site-service}}"
+							],
+							"path": [
+								"sites",
+								"{{site-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find By Criteria",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "774cc089-d90a-4dcd-962d-f4e20da6240a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "cbb5c238-05a1-46ac-aa7e-7f437d23f30e",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"site-id\", jsonData.id);",
+									"postman.setEnvironmentVariable(\"site-ref-id\", jsonData.referenceId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"type": "text",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "Date",
+								"value": "{{date}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"criteria\": {\n\t  \"siteName\": \"POSTMAN-TEST-SITE-{{site-num}}\",\n\t  \"enterpriseUnitName\": \"POSTMAN-TEST-SITE-{{site-num}}\",\n\t  \"contact\": {\n\t      \"contactPerson\": \"George P. Burdell\",\n\t      \"phoneNumber\": \"4048942000\",\n\t      \"phoneNumberCountryCode\": \"1\"\n\t  },\n\t  \"timeZone\": \"US/Eastern\",\n\t  \"locked\": false,\n\t  \"description\": \"Test Site for Postman Collection\",\n\t  \"currency\": \"USD\",\n\t  \"address\": {\n\t      \"street\": \"North Ave NW\",\n\t      \"city\": \"Atlanta\",\n\t      \"state\": \"GA\",\n\t      \"country\": \"USA\",\n\t      \"postalCode\": \"30332\"\n\t  },\n\t  \"coordinates\": {\n\t      \"latitude\": 33.7767488,\n\t      \"longitude\": -84.3984255\n\t  },\n\t  \"status\": \"ACTIVE\",\n\t  \"customAttributeSets\": []\n\t},\n\t\"customAttributes\": [],\n\t\"fields\": [\n\t\t\"hours\",\n\t\t\"contact\",\n\t\t\"timeZone\",\n\t\t\"locked\",\n\t\t\"description\",\n\t\t\"currency\",\n\t\t\"address\",\n\t\t\"coordinates\",\n\t\t\"status\",\n\t\t\"parentEnterpriseUnitId\",\n\t\t\"referenceId\"\n\t]\n}\n\t"
+						},
+						"url": {
+							"raw": "{{site-service}}/sites/find-by-criteria",
+							"host": [
+								"{{site-service}}"
+							],
+							"path": [
+								"sites",
+								"find-by-criteria"
+							]
+						},
+						"description": "### Find By Criteria\n##### Query Params\n* pageNumber: Int\n* pageSize: Int"
+					},
+					"response": []
+				},
+				{
+					"name": "Get by Reference Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{bsp-access-key}}",
+								"type": "text"
+							},
+							{
+								"key": "nep-organization",
+								"value": "{{bsp-organization}}",
+								"type": "text"
+							},
+							{
+								"key": "Date",
+								"value": "{{date}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{site-service}}/sites/by-reference-id/{{site-ref-id}}",
+							"host": [
+								"{{site-service}}"
+							],
+							"path": [
+								"sites",
+								"by-reference-id",
+								"{{site-ref-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"type": "text",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "Date",
+								"value": "{{date}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{site-service}}/sites/{{site-id}}",
+							"host": [
+								"{{site-service}}"
+							],
+							"path": [
+								"sites",
+								"{{site-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Nearby",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"type": "text",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "Date",
+								"value": "{{date}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{site-service}}/sites/find-nearby/33.7767488,-84.3984255",
+							"host": [
+								"{{site-service}}"
+							],
+							"path": [
+								"sites",
+								"find-nearby",
+								"33.7767488,-84.3984255"
+							]
+						},
+						"description": "### Finds nearby Sites\nBe sure to fill lat,lon in path with desired values\n##### Query params\n* radius: Int\n* numSites: Int\n* customAttributes: Array"
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "38c265e2-4680-4b48-9784-2548333f73fb",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "6c1dc5ea-faf6-467d-a09c-a9da7c240446",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "CDM",
+			"item": [
+				{
+					"name": "Create Consumer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d3af89f4-c263-4d82-b4b8-e4c1ac5da3ae",
+								"exec": [
+									"var response = JSON.parse(responseBody);",
+									"if (response.consumerAccountNumber) {",
+									"    pm.environment.set(\"consumerAccountNumber\", response.consumerAccountNumber);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "Date",
+								"value": "{{date}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"profileUsername\": \"ruben.bear@ncr.com\",\n  \"salutation\": \"Mr\",\n  \"firstName\": \"Ruben\",\n  \"middleName\": \"The Bear\",\n  \"lastName\": \"Warrior\",\n  \"effectiveDate\": \"2018-01-20\",\n  \"birthDate\": \"1983-05-15\",\n  \"gender\": \"Bear\",\n  \"phone\": \"2281231234\",\n  \"mobile\": \"2281230000\",\n  \"fax\": \"2280001234\",\n  \"identity\": \"identity\",\n  \"homeStore\": \"0123456789\",\n  \"socialSecurityNumber\": \"0000\",\n  \"addresses\": [\n    {\n      \"name\": \"Office\",\n      \"line1\": \"864 Spring St NW\",\n      \"line2\": \"North Tower. 14th Floor\",\n      \"city\": \"Atlanta\",\n      \"state\": \"GA\",\n      \"postalCode\": \"30308\",\n      \"extPostalCode\": \"0000\",\n      \"country\": \"USA\"\n    }\n  ],\n  \"identifiersData\": [\n    {\n      \"fieldName\": \"loyaltyCard\",\n      \"fieldValue\": \"1234567890\",\n      \"status\": \"ACTIVE\"\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{cdm-service}}/consumers",
+							"host": [
+								"{{cdm-service}}"
+							],
+							"path": [
+								"consumers"
+							]
+						},
+						"description": "Create a consumer with identifiers"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Consumer",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "46ad9c52-a312-4544-828e-e1b2fd252b21",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "Date",
+								"value": "{{date}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{cdm-service}}/consumers/{{consumerAccountNumber}}",
+							"host": [
+								"{{cdm-service}}"
+							],
+							"path": [
+								"consumers",
+								"{{consumerAccountNumber}}"
+							]
+						},
+						"description": "Get a consumer using a consumerAccountNumber"
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Consumer",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "authorization",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"value": "{{bsp-organization}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"profileUsername\": \"ruben.bear@ncr.com\",\n  \"salutation\": \"Mr\",\n  \"firstName\": \"Ruben\",\n  \"middleName\": \"The Bear\",\n  \"lastName\": \"Warrior\",\n  \"effectiveDate\": \"2018-01-20\",\n  \"birthDate\": \"1983-05-15\",\n  \"gender\": \"Bear\",\n  \"phone\": \"2281231234\",\n  \"mobile\": \"2281230000\",\n  \"fax\": \"2280001234\",\n  \"identity\": \"identity\",\n  \"homeStore\": \"0123456789\",\n  \"socialSecurityNumber\": \"0000\",\n  \"addresses\": [\n    {\n      \"name\": \"Office\",\n      \"line1\": \"864 Spring St NW\",\n      \"line2\": \"North Tower. 14th Floor\",\n      \"city\": \"Atlanta\",\n      \"state\": \"GA\",\n      \"postalCode\": \"30308\",\n      \"extPostalCode\": \"0000\",\n      \"country\": \"USA\"\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{cdm-service}}/consumers/{{consumerAccountNumber}}",
+							"host": [
+								"{{cdm-service}}"
+							],
+							"path": [
+								"consumers",
+								"{{consumerAccountNumber}}"
+							]
+						},
+						"description": "Patch consumer patches the fields that are sent as part of the request payload"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Consumer",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{bsp-access-key}}",
+								"type": "text"
+							},
+							{
+								"key": "nep-organization",
+								"value": "{{bsp-organization}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"salutation\": \"Mr\",\n    \"firstName\": \"Ruben\",\n    \"middleName\": \"The Bear\",\n    \"lastName\": \"Warrior\",\n    \"effectiveDate\": \"2018-01-20\",\n    \"birthDate\": \"1983-05-15\",\n    \"fax\": \"2280001234\",\n    \"socialSecurityNumber\": \"0000\",\n    \"addresses\": [],\n    \"identifiersData\": [\n        {\n            \"fieldName\": \"loyaltyCard\",\n            \"fieldValue\": \"nmnmnm123\",\n            \"status\": \"ACTIVE\"\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{cdm-service}}/consumers/{{consumerAccountNumber}}/update",
+							"host": [
+								"{{cdm-service}}"
+							],
+							"path": [
+								"consumers",
+								"{{consumerAccountNumber}}",
+								"update"
+							]
+						},
+						"description": "Update consumer will do a full replace of a consumer. If fields are missing it will be omitted while re-creating the consumer"
+					},
+					"response": []
+				},
+				{
+					"name": "Find Consumer(s)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "authorization",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"value": "{{bsp-organization}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"searchCriteria\": {\n       \"firstName\": \"john\"\n    },\n    \"operator\": \"AND\",\n    \"pageStart\": 0,\n    \"pageSize\": 100\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{cdm-service}}/consumers/find",
+							"host": [
+								"{{cdm-service}}"
+							],
+							"path": [
+								"consumers",
+								"find"
+							]
+						},
+						"description": "Find consumer in your organization using a `searchCriteria`. Refer to Devex for all supported `searchCriteria`"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Selling",
+			"item": [
+				{
+					"name": "Create Items for Sell (run once)",
+					"item": [
+						{
+							"name": "Create Category",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d8e6d99f-3bbb-46bd-bd73-e89f6d406660",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "708a1e05-a9fc-46e2-9b4f-7d1afb6bfe31",
+										"exec": [
+											"var versionNum = pm.environment.get(\"version-num\");\r",
+											"versionNum = versionNum ? versionNum+1 : 1;\r",
+											"pm.environment.set(\"version-num\", versionNum);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{bsp-access-key}}"
+									},
+									{
+										"key": "nep-organization",
+										"type": "text",
+										"value": "{{bsp-organization}}"
+									},
+									{
+										"key": "nep-enterprise-unit",
+										"type": "text",
+										"value": "{{bsp-site-id}}"
+									},
+									{
+										"key": "Date",
+										"type": "text",
+										"value": "{{date}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nodes\": [\r\n        {\r\n            \"version\": {{version-num}},\r\n            \"nodeCode\": \"1\",\r\n            \"tag\": \"Merchandise\",\r\n            \"departmentNode\": null,\r\n            \"departmentSale\": null,\r\n            \"status\": \"ACTIVE\",\r\n            \"title\": {\r\n                \"values\": [\r\n                    {\r\n                        \"locale\": \"en-US\",\r\n                        \"value\": \"Root\"\r\n                    }\r\n                ]\r\n            },\r\n            \"nodeId\": {\r\n                \"nodeId\": \"1\"\r\n            },\r\n            \"parentId\": null            \r\n        },\r\n        {\r\n            \"version\": {{version-num}},\r\n            \"nodeCode\": \"Drinks\",\r\n            \"tag\": \"Merchandise\",\r\n            \"departmentNode\": null,\r\n            \"departmentSale\": null,\r\n            \"status\": \"ACTIVE\",\r\n            \"title\": {\r\n                \"values\": [\r\n                    {\r\n                        \"locale\": \"en-US\",\r\n                        \"value\": \"Drinks\"\r\n                    }\r\n                ]\r\n            },\r\n            \"nodeId\": {\r\n                \"nodeId\": \"Drinks\"\r\n            },\r\n            \"parentId\": {\r\n                \"nodeId\": \"1\"\r\n            }            \r\n        },\r\n        {\r\n            \"version\": {{version-num}},\r\n            \"nodeCode\": \"Diary\",\r\n            \"tag\": \"Merchandise\",\r\n            \"departmentNode\": null,\r\n            \"departmentSale\": null,\r\n            \"status\": \"ACTIVE\",\r\n            \"title\": {\r\n                \"values\": [\r\n                    {\r\n                        \"locale\": \"en-US\",\r\n                        \"value\": \"Diary\"\r\n                    }\r\n                ]\r\n            },\r\n            \"nodeId\": {\r\n                \"nodeId\": \"Diary\"\r\n            },\r\n            \"parentId\": {\r\n                \"nodeId\": \"1\"\r\n            }\r\n            \r\n        },\r\n        {\r\n            \"version\": {{version-num}},\r\n            \"nodeCode\": \"DryFood\",\r\n            \"tag\": \"Merchandise\",\r\n            \"departmentNode\": null,\r\n            \"departmentSale\": null,\r\n            \"status\": \"ACTIVE\",\r\n            \"title\": {\r\n                \"values\": [\r\n                    {\r\n                        \"locale\": \"en-US\",\r\n                        \"value\": \"Dry Food\"\r\n                    }\r\n                ]\r\n            },\r\n            \"nodeId\": {\r\n                \"nodeId\": \"DryFood\"\r\n            },\r\n            \"parentId\": {\r\n                \"nodeId\": \"1\"\r\n            }\r\n            \r\n        },  \r\n        {\r\n            \"version\": {{version-num}},\r\n            \"nodeCode\": \"Vegetable\",\r\n            \"tag\": \"Merchandise\",\r\n            \"departmentNode\": null,\r\n            \"departmentSale\": null,\r\n            \"status\": \"ACTIVE\",\r\n            \"title\": {\r\n                \"values\": [\r\n                    {\r\n                        \"locale\": \"en-US\",\r\n                        \"value\": \"Vegetables\"\r\n                    }\r\n                ]\r\n            },\r\n            \"nodeId\": {\r\n                \"nodeId\": \"Vegetable\"\r\n            },\r\n            \"parentId\": {\r\n                \"nodeId\": \"1\"\r\n            }\r\n            \r\n        },                 \r\n        {\r\n            \"version\": {{version-num}},\r\n            \"nodeCode\": \"USTaxable\",\r\n            \"tag\": \"Merchandise\",\r\n            \"departmentNode\": null,\r\n            \"departmentSale\": null,\r\n            \"status\": \"ACTIVE\",\r\n            \"title\": {\r\n                \"values\": [\r\n                    {\r\n                        \"locale\": \"en-US\",\r\n                        \"value\": \"US Taxable\"\r\n                    }\r\n                ]\r\n            },\r\n            \"nodeId\": {\r\n                \"nodeId\": \"USTaxable\"\r\n            },\r\n            \"parentId\": {\r\n                \"nodeId\": \"1\"\r\n            }\r\n            \r\n        }\r\n    ]\r\n}"
+								},
+								"url": {
+									"raw": "{{catalog-service}}/category-nodes/2/",
+									"host": [
+										"{{catalog-service}}"
+									],
+									"path": [
+										"category-nodes",
+										"2",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Cola Item (101)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "753b41d7-0479-45e9-aacf-f140b42bb6aa",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "4ea6b8d6-c52b-47b1-8c0b-3bb532ad4e3b",
+										"exec": [
+											"var versionNum = pm.environment.get(\"version-num\");\r",
+											"versionNum = versionNum ? versionNum+1 : 1;\r",
+											"pm.environment.set(\"version-num\", versionNum);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{bsp-access-key}}"
+									},
+									{
+										"key": "nep-organization",
+										"type": "text",
+										"value": "{{bsp-organization}}"
+									},
+									{
+										"key": "nep-enterprise-unit",
+										"type": "text",
+										"value": "{{bsp-site-id}}"
+									},
+									{
+										"key": "Date",
+										"type": "text",
+										"value": "{{date}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"version\": {{version-num}},\r\n  \"packageIdentifiers\": [\r\n    {\r\n      \"type\": \"0\",\r\n      \"value\": \"101\"\r\n    }\r\n  ],\r\n  \"longDescription\": {\r\n    \"values\": [\r\n      {\r\n        \"locale\": \"en-US\",\r\n        \"value\": \"Coca cola\"\r\n      }\r\n    ]\r\n  },\r\n  \"shortDescription\": {\r\n    \"values\": [\r\n      {\r\n        \"locale\": \"en-US\",\r\n        \"value\": \"Coca cola\"\r\n      }\r\n    ]\r\n  },\r\n  \"merchandiseCategory\": {\r\n    \"nodeId\": \"Drinks\"\r\n  },\r\n  \"alternateCategories\": [\r\n    \r\n  ],\r\n  \"status\": \"ACTIVE\",\r\n  \"departmentId\": \"02\",\r\n  \"nonMerchandise\": false,\r\n  \"familyCode\": \"1\",\r\n  \"referenceId\": \"00000000000030\",\r\n  \"manufacturerCode\": null,\r\n  \"externalIdentifiers\": null,\r\n  \"dynamicAttributes\": [\r\n    {\r\n      \"type\": \"retail-item\",\r\n      \"attributes\": [\r\n        {\r\n          \"key\": \"ADDITIONAL_DESCRIPTION\",\r\n          \"value\": null,\r\n          \"localizedValue\": null\r\n        },\r\n        {\r\n          \"key\": \"ITEM_TYPE_CODE\",\r\n          \"value\": \"0\",\r\n          \"localizedValue\": null\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}"
+								},
+								"url": {
+									"raw": "{{catalog-service}}/items/2/101",
+									"host": [
+										"{{catalog-service}}"
+									],
+									"path": [
+										"items",
+										"2",
+										"101"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Cola Price",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d7ff35ab-96dd-436b-8d68-1274536f73da",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "03a616f9-e2a4-481d-8ba9-6a4077db032b",
+										"exec": [
+											"var versionNum = pm.environment.get(\"version-num\");\r",
+											"versionNum = versionNum ? versionNum+1 : 1;\r",
+											"pm.environment.set(\"version-num\", versionNum);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{bsp-access-key}}"
+									},
+									{
+										"key": "nep-organization",
+										"type": "text",
+										"value": "{{bsp-organization}}"
+									},
+									{
+										"key": "nep-enterprise-unit",
+										"type": "text",
+										"value": "{{bsp-site-id}}"
+									},
+									{
+										"key": "Date",
+										"type": "text",
+										"value": "{{date}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"version\": {{version-num}},\r\n  \"price\": 5.0,\r\n  \"currency\": \"USD\",\r\n  \"effectiveDate\": \"2001-12-17T05:00:00Z\",\r\n  \"endDate\": \"2100-12-17T05:00:00Z\",\r\n  \"status\": \"ACTIVE\",\r\n  \"basePrice\": true,\r\n  \"dynamicAttributes\": [\r\n    {\r\n      \"type\": \"retail-price\",\r\n      \"attributes\": [\r\n        {\r\n          \"key\": \"UNITS\",\r\n          \"value\": \"1\"\r\n        },\r\n        {\r\n          \"key\": \"UOM\",\r\n          \"value\": \"EA\"\r\n        }\r\n      ]\r\n    }\r\n  ]  \r\n}"
+								},
+								"url": {
+									"raw": "{{catalog-service}}/item-prices/2/101/50426749718876",
+									"host": [
+										"{{catalog-service}}"
+									],
+									"path": [
+										"item-prices",
+										"2",
+										"101",
+										"50426749718876"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Milk Item (15001)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "80b05d72-9318-48c2-9c8c-fd8499da0e57",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "902cbaa2-22b8-41ee-ac2e-329f716a0c9e",
+										"exec": [
+											"var versionNum = pm.environment.get(\"version-num\");\r",
+											"versionNum = versionNum ? versionNum+1 : 1;\r",
+											"pm.environment.set(\"version-num\", versionNum);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{bsp-access-key}}"
+									},
+									{
+										"key": "nep-organization",
+										"type": "text",
+										"value": "{{bsp-organization}}"
+									},
+									{
+										"key": "nep-enterprise-unit",
+										"type": "text",
+										"value": "{{bsp-site-id}}"
+									},
+									{
+										"key": "Date",
+										"type": "text",
+										"value": "{{date}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"version\": {{version-num}},\r\n  \"packageIdentifiers\": [\r\n    {\r\n      \"type\": \"0\",\r\n      \"value\": \"15001\"\r\n    }\r\n  ],\r\n  \"longDescription\": {\r\n    \"values\": [\r\n      {\r\n        \"locale\": \"en-US\",\r\n        \"value\": \"Whole Milk\"\r\n      }\r\n    ]\r\n  },\r\n  \"shortDescription\": {\r\n    \"values\": [\r\n      {\r\n        \"locale\": \"en-US\",\r\n        \"value\": \"Whole Milk\"\r\n      }\r\n    ]\r\n  },\r\n  \"merchandiseCategory\": {\r\n    \"nodeId\": \"Diary\"\r\n  },\r\n  \"alternateCategories\": [\r\n    \r\n  ],\r\n  \"status\": \"ACTIVE\",\r\n  \"departmentId\": \"02\",\r\n  \"nonMerchandise\": false,\r\n  \"familyCode\": \"1\",\r\n  \"referenceId\": \"00000000000030\",\r\n  \"manufacturerCode\": null,\r\n  \"externalIdentifiers\": null,\r\n  \"dynamicAttributes\": [\r\n    {\r\n      \"type\": \"retail-item\",\r\n      \"attributes\": [\r\n        {\r\n          \"key\": \"ADDITIONAL_DESCRIPTION\",\r\n          \"value\": null,\r\n          \"localizedValue\": null\r\n        },\r\n        {\r\n          \"key\": \"ITEM_TYPE_CODE\",\r\n          \"value\": \"0\",\r\n          \"localizedValue\": null\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}"
+								},
+								"url": {
+									"raw": "{{catalog-service}}/items/2/15001",
+									"host": [
+										"{{catalog-service}}"
+									],
+									"path": [
+										"items",
+										"2",
+										"15001"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Milk Price",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "fa15221a-7ce1-45a7-94fe-2ca3174fd590",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3086642c-a118-4790-a76a-a9d9b0bfad01",
+										"exec": [
+											"var versionNum = pm.environment.get(\"version-num\");\r",
+											"versionNum = versionNum ? versionNum+1 : 1;\r",
+											"pm.environment.set(\"version-num\", versionNum);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{bsp-access-key}}"
+									},
+									{
+										"key": "nep-organization",
+										"type": "text",
+										"value": "{{bsp-organization}}"
+									},
+									{
+										"key": "nep-enterprise-unit",
+										"type": "text",
+										"value": "{{bsp-site-id}}"
+									},
+									{
+										"key": "Date",
+										"type": "text",
+										"value": "{{date}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"version\": {{version-num}},\r\n  \"price\": 3.5,\r\n  \"currency\": \"USD\",\r\n  \"effectiveDate\": \"2001-12-17T05:00:00Z\",\r\n  \"endDate\": \"2100-12-17T05:00:00Z\",\r\n  \"status\": \"ACTIVE\",\r\n  \"basePrice\": true,\r\n  \"dynamicAttributes\": [\r\n    {\r\n      \"type\": \"retail-price\",\r\n      \"attributes\": [\r\n        {\r\n          \"key\": \"UNITS\",\r\n          \"value\": \"1\"\r\n        },\r\n        {\r\n          \"key\": \"UOM\",\r\n          \"value\": \"EA\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}"
+								},
+								"url": {
+									"raw": "{{catalog-service}}/item-prices/2/15001/49979488099544",
+									"host": [
+										"{{catalog-service}}"
+									],
+									"path": [
+										"item-prices",
+										"2",
+										"15001",
+										"49979488099544"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Taxable Item (200)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "74cd4c13-bb69-498b-91fe-b3dddb6d2b72",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "9d8d50f4-9b13-4b0d-8e7e-24083b3064e5",
+										"exec": [
+											"var versionNum = pm.environment.get(\"version-num\");\r",
+											"versionNum = versionNum ? versionNum+1 : 1;\r",
+											"pm.environment.set(\"version-num\", versionNum);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{bsp-access-key}}"
+									},
+									{
+										"key": "nep-organization",
+										"type": "text",
+										"value": "{{bsp-organization}}"
+									},
+									{
+										"key": "nep-enterprise-unit",
+										"type": "text",
+										"value": "{{bsp-site-id}}"
+									},
+									{
+										"key": "Date",
+										"type": "text",
+										"value": "{{date}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"version\": {{version-num}},\r\n  \"packageIdentifiers\": [\r\n    {\r\n      \"type\": \"0\",\r\n      \"value\": \"200\"\r\n    }\r\n  ],\r\n  \"longDescription\": {\r\n    \"values\": [\r\n      {\r\n        \"locale\": \"en-US\",\r\n        \"value\": \"Barilla Pasta\"\r\n      }\r\n    ]\r\n  },\r\n  \"shortDescription\": {\r\n    \"values\": [\r\n      {\r\n        \"locale\": \"en-US\",\r\n        \"value\": \"Barilla Pasta\"\r\n      }\r\n    ]\r\n  },\r\n  \"merchandiseCategory\": {\r\n    \"nodeId\": \"USTaxable\"\r\n  },\r\n  \"alternateCategories\": [\r\n    \r\n  ],\r\n  \"status\": \"ACTIVE\",\r\n  \"departmentId\": \"02\",\r\n  \"nonMerchandise\": false,\r\n  \"familyCode\": \"1\",\r\n  \"referenceId\": \"00000000000030\",\r\n  \"manufacturerCode\": null,\r\n  \"externalIdentifiers\": null,\r\n  \"dynamicAttributes\": [\r\n    {\r\n      \"type\": \"retail-item\",\r\n      \"attributes\": [\r\n        {\r\n          \"key\": \"ADDITIONAL_DESCRIPTION\",\r\n          \"value\": null,\r\n          \"localizedValue\": null\r\n        },\r\n        {\r\n          \"key\": \"ITEM_TYPE_CODE\",\r\n          \"value\": \"0\",\r\n          \"localizedValue\": null\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}"
+								},
+								"url": {
+									"raw": "{{catalog-service}}/items/2/200",
+									"host": [
+										"{{catalog-service}}"
+									],
+									"path": [
+										"items",
+										"2",
+										"200"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Taxable item Price",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "abe0a436-3bc3-4eb7-a58d-61b7ea915a76",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "b1204cf7-d3fb-45ae-a8af-a32991260d33",
+										"exec": [
+											"var versionNum = pm.environment.get(\"version-num\");\r",
+											"versionNum = versionNum ? versionNum+1 : 1;\r",
+											"pm.environment.set(\"version-num\", versionNum);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{bsp-access-key}}"
+									},
+									{
+										"key": "nep-organization",
+										"type": "text",
+										"value": "{{bsp-organization}}"
+									},
+									{
+										"key": "nep-enterprise-unit",
+										"type": "text",
+										"value": "{{bsp-site-id}}"
+									},
+									{
+										"key": "Date",
+										"type": "text",
+										"value": "{{date}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"version\": {{version-num}},\r\n  \"price\": 3.5,\r\n  \"currency\": \"USD\",\r\n  \"effectiveDate\": \"2001-12-17T05:00:00Z\",\r\n  \"endDate\": \"2100-12-17T05:00:00Z\",\r\n  \"status\": \"ACTIVE\",\r\n  \"basePrice\": true,\r\n  \"dynamicAttributes\": [\r\n    {\r\n      \"type\": \"retail-price\",\r\n      \"attributes\": [\r\n        {\r\n          \"key\": \"UNITS\",\r\n          \"value\": \"1\"\r\n        },\r\n        {\r\n          \"key\": \"UOM\",\r\n          \"value\": \"EA\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}"
+								},
+								"url": {
+									"raw": "{{catalog-service}}/item-prices/2/200/49684347823879",
+									"host": [
+										"{{catalog-service}}"
+									],
+									"path": [
+										"item-prices",
+										"2",
+										"200",
+										"49684347823879"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Weighable Item (22)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "c51ee289-00b2-4588-a6c1-009c2c18e613",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "72dce0d0-632a-4890-a191-679baa5e6434",
+										"exec": [
+											"var versionNum = pm.environment.get(\"version-num\");\r",
+											"versionNum = versionNum ? versionNum+1 : 1;\r",
+											"pm.environment.set(\"version-num\", versionNum);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{bsp-access-key}}"
+									},
+									{
+										"key": "nep-organization",
+										"type": "text",
+										"value": "{{bsp-organization}}"
+									},
+									{
+										"key": "nep-enterprise-unit",
+										"type": "text",
+										"value": "{{bsp-site-id}}"
+									},
+									{
+										"key": "Date",
+										"type": "text",
+										"value": "{{date}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"version\": {{version-num}},\r\n  \"packageIdentifiers\": [\r\n    {\r\n      \"type\": \"0\",\r\n      \"value\": \"22\"\r\n    }\r\n  ],\r\n  \"longDescription\": {\r\n    \"values\": [\r\n      {\r\n        \"locale\": \"en-US\",\r\n        \"value\": \"Farm Tomato\"\r\n      }\r\n    ]\r\n  },\r\n  \"shortDescription\": {\r\n    \"values\": [\r\n      {\r\n        \"locale\": \"en-US\",\r\n        \"value\": \"Farm Tomato\"\r\n      }\r\n    ]\r\n  },\r\n  \"merchandiseCategory\": {\r\n    \"nodeId\": \"Vegetable\"\r\n  },\r\n  \"alternateCategories\": [\r\n    \r\n  ],\r\n  \"status\": \"ACTIVE\",\r\n  \"departmentId\": \"02\",\r\n  \"nonMerchandise\": false,\r\n  \"familyCode\": \"1\",\r\n  \"referenceId\": \"00000000000030\",\r\n  \"manufacturerCode\": null,\r\n  \"externalIdentifiers\": null,\r\n  \"dynamicAttributes\": [\r\n    {\r\n      \"type\": \"retail-item\",\r\n      \"attributes\": [\r\n        {\r\n          \"key\": \"ADDITIONAL_DESCRIPTION\",\r\n          \"value\": null,\r\n          \"localizedValue\": null\r\n        },\r\n        {\r\n          \"key\": \"ITEM_TYPE_CODE\",\r\n          \"value\": \"0\",\r\n          \"localizedValue\": null\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}"
+								},
+								"url": {
+									"raw": "{{catalog-service}}/items/2/22",
+									"host": [
+										"{{catalog-service}}"
+									],
+									"path": [
+										"items",
+										"2",
+										"22"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Weighable item Price",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "74cb6055-d2cc-43a2-92ea-3fa94d2951cb",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "5bd19e58-448e-4c28-a9b0-e89de22d44bf",
+										"exec": [
+											"var versionNum = pm.environment.get(\"version-num\");\r",
+											"versionNum = versionNum ? versionNum+1 : 1;\r",
+											"pm.environment.set(\"version-num\", versionNum);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{bsp-access-key}}"
+									},
+									{
+										"key": "nep-organization",
+										"type": "text",
+										"value": "{{bsp-organization}}"
+									},
+									{
+										"key": "nep-enterprise-unit",
+										"type": "text",
+										"value": "{{bsp-site-id}}"
+									},
+									{
+										"key": "Date",
+										"type": "text",
+										"value": "{{date}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"version\": {{version-num}},\r\n  \"price\": 4.0,\r\n  \"currency\": \"USD\",\r\n  \"effectiveDate\": \"2001-12-17T05:00:00Z\",\r\n  \"endDate\": \"2100-12-17T05:00:00Z\",\r\n  \"status\": \"ACTIVE\",\r\n  \"basePrice\": true,\r\n  \"dynamicAttributes\": [\r\n    {\r\n      \"type\": \"retail-price\",\r\n      \"attributes\": [\r\n        {\r\n          \"key\": \"UNITS\",\r\n          \"value\": \"1\"\r\n        },\r\n        {\r\n          \"key\": \"UOM\",\r\n          \"value\": \"LBR\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}"
+								},
+								"url": {
+									"raw": "{{catalog-service}}/item-prices/2/22/49684347823879",
+									"host": [
+										"{{catalog-service}}"
+									],
+									"path": [
+										"item-prices",
+										"2",
+										"22",
+										"49684347823879"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Item Details",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3e132380-3fdb-43c4-9a7a-e62e4c5a36d7",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "d55cda52-837e-43ce-82f1-a24bb286cebd",
+										"exec": [
+											"var versionNum = pm.environment.get(\"version-num\");\r",
+											"versionNum = versionNum ? versionNum+1 : 1;\r",
+											"pm.environment.set(\"version-num\", versionNum);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{bsp-access-key}}"
+									},
+									{
+										"key": "nep-organization",
+										"type": "text",
+										"value": "{{bsp-organization}}"
+									},
+									{
+										"key": "nep-enterprise-unit",
+										"type": "text",
+										"value": "{{bsp-site-id}}"
+									},
+									{
+										"key": "Date",
+										"type": "text",
+										"value": "{{date}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{catalog-service}}/item-details/2/101",
+									"host": [
+										"{{catalog-service}}"
+									],
+									"path": [
+										"item-details",
+										"2",
+										"101"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "df8c7ac7-b390-41e3-92b9-3e9cc3b28936",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "c1647eff-0e49-4786-933b-b6e11057b49b",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Create Selling Configuration (run once)",
+					"item": [
+						{
+							"name": "Create Tax Authority",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "290bbe70-1f4b-4b9c-b6ea-9d132b13c088",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "24e8e46c-88fa-4ecb-926b-4eacebb60d76",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{bsp-access-key}}"
+									},
+									{
+										"key": "nep-organization",
+										"type": "text",
+										"value": "{{bsp-organization}}"
+									},
+									{
+										"key": "nep-enterprise-unit",
+										"type": "text",
+										"value": "{{bsp-site-id}}"
+									},
+									{
+										"key": "Date",
+										"type": "text",
+										"value": "{{date}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"descriptions\":[{\"culture\":\"en-US\",\"value\":\"Federal\"}]}"
+								},
+								"url": {
+									"raw": "{{selling-configuration-service}}/tax-settings/authorities/Federal",
+									"host": [
+										"{{selling-configuration-service}}"
+									],
+									"path": [
+										"tax-settings",
+										"authorities",
+										"Federal"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Tax Rate",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6cc00b62-bafe-471d-971f-2e2176aaa27a",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "0ff48cbe-71df-42bc-8ae7-a100dce8e4aa",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{bsp-access-key}}"
+									},
+									{
+										"key": "nep-organization",
+										"type": "text",
+										"value": "{{bsp-organization}}"
+									},
+									{
+										"key": "nep-enterprise-unit",
+										"type": "text",
+										"value": "{{bsp-site-id}}"
+									},
+									{
+										"key": "Date",
+										"type": "text",
+										"value": "{{date}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"taxAuthority\": \"Federal\",\r\n  \"taxType\": \"Tax\",\r\n  \"descriptions\": [\r\n    {\r\n      \"culture\": \"en-US\",\r\n      \"value\": \"Federal 5%\"\r\n    }\r\n  ],\r\n  \"isIncluded\": false,\r\n  \"startDateTime\": \"2020-10-13T13:12:50.8587701\",\r\n  \"endDateTime\": null,\r\n  \"rateCondition\": {\r\n    \"zoneId\": null,\r\n    \"products\": null,\r\n    \"categories\": [\r\n      {\r\n        \"categoryId\": \"USTaxable\",\r\n        \"categoryLabel\": \"Merchandise\",\r\n        \"isExclude\": false\r\n      }\r\n    ],\r\n    \"groups\": null,\r\n    \"minimumTaxableAmount\": null,\r\n    \"containEatInProducts\": null,\r\n    \"includeAccessorialFee\": null\r\n  },\r\n  \"calculationMethod\": {\r\n    \"calculationMethodType\": \"Percent\",\r\n    \"leveles\": [\r\n      {\r\n        \"from\": 0.0,\r\n        \"to\": null,\r\n        \"value\": 5.0,\r\n        \"supportedImposition\": {\r\n          \"impositionId\": null,\r\n          \"indicator\": \"C\"\r\n        },\r\n        \"BracketId\": null\r\n      }\r\n    ]\r\n  },\r\n  \"dependenceRates\": [\r\n    \r\n  ],\r\n  \"roundingMethod\": \"Standard\",\r\n  \"isCouponReduceTaxationAmount\": false,\r\n  \"taxableAmountRoundingStrategyKey\": null\r\n}"
+								},
+								"url": {
+									"raw": "{{selling-configuration-service}}/tax-settings/rates/1",
+									"host": [
+										"{{selling-configuration-service}}"
+									],
+									"path": [
+										"tax-settings",
+										"rates",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Tender",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "c3cba989-33e0-4cc1-94db-59ad05124afc",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "c8e7f974-24c0-45d7-a45f-f5ee34ea4869",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{bsp-access-key}}"
+									},
+									{
+										"key": "nep-organization",
+										"type": "text",
+										"value": "{{bsp-organization}}"
+									},
+									{
+										"key": "nep-enterprise-unit",
+										"type": "text",
+										"value": "{{bsp-site-id}}"
+									},
+									{
+										"key": "Date",
+										"type": "text",
+										"value": "{{date}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"tenderType\": \"CreditDebit\",\r\n  \"descriptions\": [\r\n    {\r\n      \"culture\": \"en-us\",\r\n      \"value\": \"Visa\"\r\n    }\r\n  ],\r\n  \"validators\": [\r\n    \r\n  ],\r\n  \"checkValidatorName\": null,\r\n  \"currency\": \"USD\",\r\n  \"manualEntry\": false,\r\n  \"isProcessedByEps\": true,\r\n  \"isEcc\": false,\r\n  \"alternateTenderId\": null,\r\n  \"isUniquelyIdentifiable\": false,\r\n  \"check21ValidationEnabled\": false,\r\n  \"isBottleDepositVoucher\": false,\r\n  \"tenderReferences\": null,\r\n  \"isLoyaltyRequired\": false,\r\n  \"loyaltySVAccountType\": null\r\n}"
+								},
+								"url": {
+									"raw": "{{selling-configuration-service}}/tender-settings/tender-types/2",
+									"host": [
+										"{{selling-configuration-service}}"
+									],
+									"path": [
+										"tender-settings",
+										"tender-types",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Create new Cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "62de7ab3-fd45-4bfa-8ca9-7bb399cc5582",
+								"exec": [
+									"pm.test(\"Get cart id\", function () {\r",
+									"    var l = pm.response.headers.get(\"Location\");\r",
+									"    var bl = l.split(\"/\");\r",
+									"    pm.environment.set(\"cart-id\", bl[2]);\r",
+									"    var et = pm.response.headers.get(\"ETag\");\r",
+									"    pm.environment.set(\"e-tag\", et);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{bsp-access-key}}",
+								"type": "text"
+							},
+							{
+								"key": "nep-organization",
+								"value": "{{bsp-organization}}",
+								"type": "text"
+							},
+							{
+								"key": "nep-enterprise-unit",
+								"value": "{{bsp-site-id}}",
+								"type": "text"
+							},
+							{
+								"key": "Date",
+								"value": "{{date}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{selling-service}}",
+							"host": [
+								"{{selling-service}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7e6b9f58-f062-4615-9483-4491e1cdfeac",
+								"exec": [
+									"pm.test(\"Get cart Etag\", function () {\r",
+									"    var et = pm.response.headers.get(\"ETag\");\r",
+									"    pm.environment.set(\"e-tag\", et);\r",
+									"    var bd = pm.response.json().totals.balanceDue;\r",
+									"    pm.environment.set(\"balance-due\", bd);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"type": "text",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "nep-enterprise-unit",
+								"type": "text",
+								"value": "{{bsp-site-id}}"
+							},
+							{
+								"key": "Date",
+								"type": "text",
+								"value": "{{date}}"
+							}
+						],
+						"url": {
+							"raw": "{{selling-service}}/{{cart-id}}",
+							"host": [
+								"{{selling-service}}"
+							],
+							"path": [
+								"{{cart-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add item to cart 101 (Cola)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "28df2c7c-d155-4a57-b34c-7f4540a33700",
+								"exec": [
+									"pm.test(\"Get cart Etag\", function () {\r",
+									"    var et = pm.response.headers.get(\"ETag\");\r",
+									"    pm.environment.set(\"e-tag\", et);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"type": "text",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "nep-enterprise-unit",
+								"type": "text",
+								"value": "{{bsp-site-id}}"
+							},
+							{
+								"key": "Date",
+								"type": "text",
+								"value": "{{date}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"scanData\": \"101\",\r\n  \"quantity\": {\r\n    \"unitOfMeasure\": \"EA\",\r\n    \"value\": 1\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "{{selling-service}}/{{cart-id}}/items",
+							"host": [
+								"{{selling-service}}"
+							],
+							"path": [
+								"{{cart-id}}",
+								"items"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add item to cart 0015001 (Milk)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7f240739-4c35-4c91-8972-824d044d8c9f",
+								"exec": [
+									"pm.test(\"Get cart Etag\", function () {\r",
+									"    var et = pm.response.headers.get(\"ETag\");\r",
+									"    pm.environment.set(\"e-tag\", et);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"type": "text",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "nep-enterprise-unit",
+								"type": "text",
+								"value": "{{bsp-site-id}}"
+							},
+							{
+								"key": "Date",
+								"type": "text",
+								"value": "{{date}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"scanData\": \"0015001\",\r\n  \"quantity\": {\r\n    \"unitOfMeasure\": \"EA\",\r\n    \"value\": 1\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "{{selling-service}}/{{cart-id}}/items",
+							"host": [
+								"{{selling-service}}"
+							],
+							"path": [
+								"{{cart-id}}",
+								"items"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update item 0015001 Quntity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f9a10a57-fc21-48d8-b1cd-f741f45f4aad",
+								"exec": [
+									"pm.test(\"Get cart Etag\", function () {\r",
+									"    var et = pm.response.headers.get(\"ETag\");\r",
+									"    pm.environment.set(\"e-tag\", et);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"type": "text",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "nep-enterprise-unit",
+								"type": "text",
+								"value": "{{bsp-site-id}}"
+							},
+							{
+								"key": "Date",
+								"type": "text",
+								"value": "{{date}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"quantity\": {\r\n    \"unitOfMeasure\": \"EA\",\r\n    \"value\": 2\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "{{selling-service}}/{{cart-id}}/items/2",
+							"host": [
+								"{{selling-service}}"
+							],
+							"path": [
+								"{{cart-id}}",
+								"items",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add item to cart 200 (Taxable)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b25429a2-9ec6-41d4-8624-c4cac85f5379",
+								"exec": [
+									"pm.test(\"Get cart Etag\", function () {\r",
+									"    var et = pm.response.headers.get(\"ETag\");\r",
+									"    pm.environment.set(\"e-tag\", et);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"type": "text",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "nep-enterprise-unit",
+								"type": "text",
+								"value": "{{bsp-site-id}}"
+							},
+							{
+								"key": "Date",
+								"type": "text",
+								"value": "{{date}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"scanData\": \"200\",\r\n  \"quantity\": {\r\n    \"unitOfMeasure\": \"EA\",\r\n    \"value\": 1\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "{{selling-service}}/{{cart-id}}/items",
+							"host": [
+								"{{selling-service}}"
+							],
+							"path": [
+								"{{cart-id}}",
+								"items"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add item to cart 22 (Weighable)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "66169f13-df91-49ba-97e1-473ce61c531c",
+								"exec": [
+									"pm.test(\"Get cart Etag\", function () {\r",
+									"    var et = pm.response.headers.get(\"ETag\");\r",
+									"    pm.environment.set(\"e-tag\", et);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"type": "text",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "nep-enterprise-unit",
+								"type": "text",
+								"value": "{{bsp-site-id}}"
+							},
+							{
+								"key": "Date",
+								"type": "text",
+								"value": "{{date}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"scanData\": \"22\",\r\n  \"quantity\": {\r\n    \"unitOfMeasure\": \"LBR\",\r\n    \"value\": 1.5\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "{{selling-service}}/{{cart-id}}/items",
+							"host": [
+								"{{selling-service}}"
+							],
+							"path": [
+								"{{cart-id}}",
+								"items"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Cart items",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3e034fa1-ccce-4705-88f0-bd795e5abc4b",
+								"exec": [
+									"pm.test(\"Get cart Etag\", function () {\r",
+									"    var et = pm.response.headers.get(\"ETag\");\r",
+									"    pm.environment.set(\"e-tag\", et);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"type": "text",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "nep-enterprise-unit",
+								"type": "text",
+								"value": "{{bsp-site-id}}"
+							},
+							{
+								"key": "Date",
+								"type": "text",
+								"value": "{{date}}"
+							}
+						],
+						"url": {
+							"raw": "{{selling-service}}/{{cart-id}}/items",
+							"host": [
+								"{{selling-service}}"
+							],
+							"path": [
+								"{{cart-id}}",
+								"items"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Cart Status - Total",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f0a0f98d-f087-4af4-91ed-cc527438a0db",
+								"exec": [
+									"pm.test(\"Get cart Etag\", function () {\r",
+									"    var et = pm.response.headers.get(\"ETag\");\r",
+									"    pm.environment.set(\"e-tag\", et);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"type": "text",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "nep-enterprise-unit",
+								"type": "text",
+								"value": "{{bsp-site-id}}"
+							},
+							{
+								"key": "Date",
+								"type": "text",
+								"value": "{{date}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\" : \"Total\"\r\n}"
+						},
+						"url": {
+							"raw": "{{selling-service}}/{{cart-id}}",
+							"host": [
+								"{{selling-service}}"
+							],
+							"path": [
+								"{{cart-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Cart Status - Tender",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "45b1af88-39f4-4d41-b330-1e3c6c553bd1",
+								"exec": [
+									"pm.test(\"Get cart Etag\", function () {\r",
+									"    var et = pm.response.headers.get(\"ETag\");\r",
+									"    pm.environment.set(\"e-tag\", et);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"type": "text",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "nep-enterprise-unit",
+								"type": "text",
+								"value": "{{bsp-site-id}}"
+							},
+							{
+								"key": "Date",
+								"type": "text",
+								"value": "{{date}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\" : \"Tender\"\r\n}"
+						},
+						"url": {
+							"raw": "{{selling-service}}/{{cart-id}}",
+							"host": [
+								"{{selling-service}}"
+							],
+							"path": [
+								"{{cart-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Cart before payment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b15f7d8c-c0df-4be8-8652-99d59a972880",
+								"exec": [
+									"pm.test(\"Get cart Etag\", function () {\r",
+									"    var et = pm.response.headers.get(\"ETag\");\r",
+									"    pm.environment.set(\"e-tag\", et);\r",
+									"    var bd = pm.response.json().totals.balanceDue;\r",
+									"    pm.environment.set(\"balance-due\", bd);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"type": "text",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "nep-enterprise-unit",
+								"type": "text",
+								"value": "{{bsp-site-id}}"
+							},
+							{
+								"key": "Date",
+								"type": "text",
+								"value": "{{date}}"
+							}
+						],
+						"url": {
+							"raw": "{{selling-service}}/{{cart-id}}",
+							"host": [
+								"{{selling-service}}"
+							],
+							"path": [
+								"{{cart-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Tender (VISA)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e49717b0-8075-4565-8101-0f580a0c9317",
+								"exec": [
+									"pm.test(\"Get cart Etag\", function () {\r",
+									"    var et = pm.response.headers.get(\"ETag\");\r",
+									"    pm.environment.set(\"e-tag\", et);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"type": "text",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "nep-enterprise-unit",
+								"type": "text",
+								"value": "{{bsp-site-id}}"
+							},
+							{
+								"key": "Date",
+								"type": "text",
+								"value": "{{date}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"tenderId\": \"2\",\r\n  \"amount\": {{balance-due}},\r\n  \"status\": \"authorized\",\r\n  \"authorization\": {\r\n    \"authorizationType\": \"local\",\r\n    \"authorizationCode\": \"OK200\",\r\n    \"referenceNumber\": \"36787687687\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "{{selling-service}}/{{cart-id}}/tenders",
+							"host": [
+								"{{selling-service}}"
+							],
+							"path": [
+								"{{cart-id}}",
+								"tenders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Cart Status - Finalization",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a4d8d996-3074-4d06-b516-1962c72dccbc",
+								"exec": [
+									"pm.test(\"Get cart Etag\", function () {\r",
+									"    var et = pm.response.headers.get(\"ETag\");\r",
+									"    pm.environment.set(\"e-tag\", et);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"type": "text",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "nep-enterprise-unit",
+								"type": "text",
+								"value": "{{bsp-site-id}}"
+							},
+							{
+								"key": "Date",
+								"type": "text",
+								"value": "{{date}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\" : \"Finalization\"\r\n}"
+						},
+						"url": {
+							"raw": "{{selling-service}}/{{cart-id}}",
+							"host": [
+								"{{selling-service}}"
+							],
+							"path": [
+								"{{cart-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Cart Status - Closed",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "42ff9892-4a7d-44fe-9418-47d5c10621aa",
+								"exec": [
+									"pm.test(\"Get cart Etag\", function () {\r",
+									"    var et = pm.response.headers.get(\"ETag\");\r",
+									"    pm.environment.set(\"e-tag\", et);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"type": "text",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "nep-enterprise-unit",
+								"type": "text",
+								"value": "{{bsp-site-id}}"
+							},
+							{
+								"key": "Date",
+								"type": "text",
+								"value": "{{date}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\" : \"Closed\"\r\n}"
+						},
+						"url": {
+							"raw": "{{selling-service}}/{{cart-id}}",
+							"host": [
+								"{{selling-service}}"
+							],
+							"path": [
+								"{{cart-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete the Cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ef7429f5-f86a-4f67-899a-4429f5543a36",
+								"exec": [
+									"pm.test(\"Get cart Etag\", function () {\r",
+									"    var et = pm.response.headers.get(\"ETag\");\r",
+									"    pm.environment.set(\"e-tag\", et);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{bsp-access-key}}"
+							},
+							{
+								"key": "nep-organization",
+								"type": "text",
+								"value": "{{bsp-organization}}"
+							},
+							{
+								"key": "nep-enterprise-unit",
+								"type": "text",
+								"value": "{{bsp-site-id}}"
+							},
+							{
+								"key": "Date",
+								"type": "text",
+								"value": "{{date}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{selling-service}}/{{cart-id}}",
+							"host": [
+								"{{selling-service}}"
+							],
+							"path": [
+								"{{cart-id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	
+	
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "b82ba265-64f0-4711-8c4e-76a18777a662",
+				"type": "text/javascript",
+				"exec": [
+					"//Services for products should be added here",
+					"postman.setEnvironmentVariable(\"site-service\", \"https://gateway-staging.ncrcloud.com/site\");",
+					"postman.setEnvironmentVariable(\"security-service\", \"https://gateway-staging.ncrcloud.com/security\");",
+					"postman.setEnvironmentVariable(\"order-service\", \"https://gateway-staging.ncrcloud.com/order/3/orders/1\");",
+					"postman.setEnvironmentVariable(\"tdm-service\", \"https://gateway-staging.ncrcloud.com/transaction-document/transaction-documents\");",
+					"postman.setEnvironmentVariable(\"cdm-service\", \"https://gateway-staging.ncrcloud.com/cdm\");",
+					"postman.setEnvironmentVariable(\"catalog-items-service\", \"https://gateway-staging.ncrcloud.com/catalog/items\");",
+					"postman.setEnvironmentVariable(\"selling-service\",\"https://gateway-staging.ncrcloud.com/emerald/selling-service/v1/carts\");",
+					"postman.setEnvironmentVariable(\"selling-configuration-service\",\"https://gateway-staging.ncrcloud.com/emerald/selling-service/c1\");",
+					"postman.setEnvironmentVariable(\"catalog-service\",\"https://gateway-staging.ncrcloud.com/catalog/2\");",
+          "",
+					"// Any required fields for a call should be added here",
+					"postman.setEnvironmentVariable(\"bsp-organization\", \"992ac8ce56fa4e30b3eb3367dc2c3693\");",
+					"postman.setEnvironmentVariable(\"bsp-site-id\", \"de0ebf8075484018af65c4eb6e9c462d\");",
+					"postman.setEnvironmentVariable(\"bsp-shared-key\", \"24cab6f495cf4551bcd79fef64b79a06\");",
+					"postman.setEnvironmentVariable(\"bsp-secret-key\", \"a99bf0930ff24329926483ac22c3c9c6\");",
+					"// Ensures any content has variables substituted; supports recursive",
+					"// resolution (environment variable that references environment/global variables)",
+					"const convertVariables = function(templateContent) {",
+					"    const regexPattern = /({{(.*?)}})/g;",
+					"    let convertedContent = templateContent;",
+					"    let matchedVar = new RegExp(regexPattern).exec(convertedContent);",
+					"    while (matchedVar !== null) {",
+					"        const variableReplacement = matchedVar[1];",
+					"        const variableName = matchedVar[2];",
+					"        const variableValue = postman.getEnvironmentVariable(variableName) || postman.getGlobalVariable(variableName);",
+					"        convertedContent = convertedContent.replace(variableReplacement, variableValue);",
+					"        matchedVar = new RegExp(regexPattern).exec(convertedContent);",
+					"    }",
+					"    return convertedContent;",
+					"}",
+					"// Extracts the signable content from the request",
+					"const signableContent = function() {",
+					"    const requestPath = convertVariables(request.url.trim()).replace(/^https?:\\/\\/[^\\/]+\\//, '/');",
+					"    const params = [",
+					"        request.method,",
+					"        requestPath,",
+					"        request.headers['content-type'],",
+					"        request.headers['content-md5'],",
+					"        convertVariables(request.headers['nep-organization'])",
+					"    ];",
+					"    return params.filter(p => p && p.length > 0).join('\\n');",
+					"}",
+					"// Generates a unique date-based signing key",
+					"const uniqueKey = function(date) {",
+					"    const nonce = date.toISOString().slice(0, 19) + '.000Z';",
+					"    return postman.getEnvironmentVariable('bsp-secret-key') + nonce;",
+					"}",
+					"// Calculates the HMAC signature",
+					"const calculateSignature = function() {",
+					"    const date = new Date();",
+					"    postman.setEnvironmentVariable('date', date.toGMTString());",
+					"    const key = uniqueKey(date);",
+					"    const sc = signableContent();",
+					"    const hmac = CryptoJS.HmacSHA512(sc, key);",
+					"    return CryptoJS.enc.Base64.stringify(hmac);",
+					"}",
+					"// Stores the generated HMAC signature under the access key",
+					"const signature = calculateSignature();",
+					"const sharedKey = postman.getEnvironmentVariable('bsp-shared-key');",
+					"postman.setEnvironmentVariable('bsp-access-key', `AccessKey ${sharedKey}:${signature}`);"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "a7487b49-00b8-450e-a9f1-6a88df95db57",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

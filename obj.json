@@ -1,0 +1,18 @@
+{
+  "orderId" : "hashed value", 
+  "orderTime": "dateTime", 
+  "orderItems": {
+
+  }
+}
+
+
+
+{
+  "recipieId"  : "hashed value", 
+  "recipieName" : "Pizza", 
+  "ingredients" : {
+    "ingredientId" : ""
+  }
+
+}

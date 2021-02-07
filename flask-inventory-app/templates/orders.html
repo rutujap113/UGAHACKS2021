@@ -24,22 +24,22 @@
                 <div class="card-body">
                     <div class="table-responsive">
                                     
-                        {% if movements|length < 1 %}
+                        {% if orders|length < 1 %}
                         <h4>There are no Movements, add one above</h4>
                         {% else %}
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>Product Name</th>
-                                    <th>Warehouse</th>
-                                    <th>Quantity</th>
+                                    <th>Item name</th>
+                                    <th>Date</th>
+                                    <th>Price</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th>Product Name</th>
-                                    <th>Warehouse</th>
-                                    <th>Quantity</th>
+                                    <th>Item Name</th>
+                                    <th>Date</th>
+                                    <th>Price</th>
                                 </tr>
                             </tfoot>
                             <tbody>

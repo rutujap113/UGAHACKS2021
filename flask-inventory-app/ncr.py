@@ -135,8 +135,26 @@ class NCRRequester():
     
     def putMenu(self): 
         menu = {
-            'fries': {
-                'price': 3.10, 
+            'salmon bowl': {
+                'price': 24.00, 
+                'ingredients': {
+                    'potato': 2,
+                }
+            }, 
+            'spring bowl': {
+                'price': 22.10, 
+                'ingredients': {
+                    'potato': 2,
+                }
+            }, 
+            'avocado bowl': {
+                'price': 26.10, 
+                'ingredients': {
+                    'potato': 2,
+                }
+            },
+            'berry bowl': {
+                'price': 24.10, 
                 'ingredients': {
                     'potato': 2,
                 }
@@ -149,6 +167,10 @@ class NCRRequester():
         }
 
         res = self.put(f'https://gateway-staging.ncrcloud.com/order/3/orders/1/{MENU_ID}', body=body).json()
+        return res
+
+    def getMenu(self):
+        res = json.loads(self.get(f'https://gateway-staging.ncrcloud.com/order/3/orders/1/{MENU_ID}').json()['comments'])
         return res
 
 ncr = NCRRequester()
